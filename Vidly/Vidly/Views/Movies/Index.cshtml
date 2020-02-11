@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Vidly.ViewModels.IndexMovieViewModels>
+
+@{
+    this.ViewBag.Title = "All Movies";
+}
+
+<h1>Movies</h1>
+@if (this.Model.Count() == 0)
+{
+    <p>There are no movies yet!</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Movie
+            </th>
+        </tr>
+        @foreach (var item in this.Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+            </tr>
+        }
+    </table>
+}
