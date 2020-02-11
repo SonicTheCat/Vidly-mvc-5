@@ -14,20 +14,13 @@ else
     <table class="table table-bordered">
         <tr>
             <th>Customers</th>
-            <th>Discount Rate</th>
+            <th>Membership Type</th>
         </tr>
         @foreach (var item in this.Model)
         {
             <tr>
                 <td>@Html.ActionLink(item.Name, "Details", new { id = item.Id })</td>
-                @if (item.MembershipType.DiscountRate != 0)
-                {
-                    <td>@item.MembershipType.DiscountRate%</td>
-                }
-                else
-                {
-                    <td>none</td>
-                }
+                <td>@item.MembershipType.Name</td>
             </tr>
         }
     </table>

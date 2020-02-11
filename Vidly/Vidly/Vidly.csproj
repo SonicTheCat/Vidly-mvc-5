@@ -195,6 +195,18 @@
     <Compile Include="Migrations\202002111818505_ApplyAnnotationToCustomerName.Designer.cs">
       <DependentUpon>202002111818505_ApplyAnnotationToCustomerName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002112152475_AddMembershipTypeAditionalProperty.cs" />
+    <Compile Include="Migrations\202002112152475_AddMembershipTypeAditionalProperty.Designer.cs">
+      <DependentUpon>202002112152475_AddMembershipTypeAditionalProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002112154587_AddValuesToMembershipNameProperty.cs" />
+    <Compile Include="Migrations\202002112154587_AddValuesToMembershipNameProperty.Designer.cs">
+      <DependentUpon>202002112154587_AddValuesToMembershipNameProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002112206113_AddBirthDatePropertyToCustomer.cs" />
+    <Compile Include="Migrations\202002112206113_AddBirthDatePropertyToCustomer.Designer.cs">
+      <DependentUpon>202002112206113_AddBirthDatePropertyToCustomer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -300,6 +312,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002111818505_ApplyAnnotationToCustomerName.resx">
       <DependentUpon>202002111818505_ApplyAnnotationToCustomerName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002112152475_AddMembershipTypeAditionalProperty.resx">
+      <DependentUpon>202002112152475_AddMembershipTypeAditionalProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002112154587_AddValuesToMembershipNameProperty.resx">
+      <DependentUpon>202002112154587_AddValuesToMembershipNameProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002112206113_AddBirthDatePropertyToCustomer.resx">
+      <DependentUpon>202002112206113_AddBirthDatePropertyToCustomer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

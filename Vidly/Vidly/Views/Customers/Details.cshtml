@@ -1,3 +1,9 @@
-﻿@model Vidly.ViewModels.DetailsCustomerViewModels
+﻿@using System.Globalization
+@model Vidly.ViewModels.DetailsCustomerViewModels
 
-<h1>Details For Customer: @this.Model.Name</h1>
+<h1>@this.Model.Name</h1>
+<p>Membership Type: @this.Model.MembershipTypeName</p>
+@if (this.Model.BirthDate.HasValue)
+{
+    <p>Date of birth: @this.Model.BirthDate.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</p>
+}
