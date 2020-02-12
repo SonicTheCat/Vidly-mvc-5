@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Vidly.ViewModels.IndexMovieViewModels>
+﻿@model IEnumerable<Vidly.Models.Movie>
 
 @{
     this.ViewBag.Title = "All Movies";
@@ -13,14 +13,14 @@ else
 {
     <table class="table table-bordered">
         <tr>
-            <th>
-                Movie
-            </th>
+            <th>Movie</th>
+            <th>Genre</th>
         </tr>
         @foreach (var item in this.Model)
         {
             <tr>
-                <td>@item.Name</td>
+                <td>@Html.ActionLink(item.Name, "Details", "Movies", new { area = "" }, new { id = item.Id })</td>
+                <td>@item.Genre.Name</td>
             </tr>
         }
     </table>
