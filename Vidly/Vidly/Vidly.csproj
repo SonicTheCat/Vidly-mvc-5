@@ -215,6 +215,10 @@
     <Compile Include="Migrations\202002121033028_PopulateGenre.Designer.cs">
       <DependentUpon>202002121033028_PopulateGenre.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002121254289_AddedNewPropertiesForMovieEntity.cs" />
+    <Compile Include="Migrations\202002121254289_AddedNewPropertiesForMovieEntity.Designer.cs">
+      <DependentUpon>202002121254289_AddedNewPropertiesForMovieEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -289,6 +293,7 @@
     <Content Include="Views\Movies\Index.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Customers\Details.cshtml" />
+    <Content Include="Views\Movies\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -336,6 +341,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002121033028_PopulateGenre.resx">
       <DependentUpon>202002121033028_PopulateGenre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002121254289_AddedNewPropertiesForMovieEntity.resx">
+      <DependentUpon>202002121254289_AddedNewPropertiesForMovieEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
