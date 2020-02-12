@@ -219,6 +219,10 @@
     <Compile Include="Migrations\202002121254289_AddedNewPropertiesForMovieEntity.Designer.cs">
       <DependentUpon>202002121254289_AddedNewPropertiesForMovieEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002121347143_MembershipTypePropNameCreatedRequired.cs" />
+    <Compile Include="Migrations\202002121347143_MembershipTypePropNameCreatedRequired.Designer.cs">
+      <DependentUpon>202002121347143_MembershipTypePropNameCreatedRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -344,6 +348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002121254289_AddedNewPropertiesForMovieEntity.resx">
       <DependentUpon>202002121254289_AddedNewPropertiesForMovieEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002121347143_MembershipTypePropNameCreatedRequired.resx">
+      <DependentUpon>202002121347143_MembershipTypePropNameCreatedRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
