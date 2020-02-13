@@ -48,21 +48,39 @@ namespace Vidly.Controllers
         public ActionResult Create()
         {
             var membershipTypes = this.context.MembershipTypes.ToList();
-            var viewModel = new CreateCustomerViewModel()
+            var viewModel = new CustomerFormViewModel()
             {
                 MembershipTypes = membershipTypes
-            }; 
+            };
 
-            return this.View(viewModel); 
+            return this.View("CustomerForm", viewModel);
         }
 
         [HttpPost]
-        public ActionResult Create(Customer customer)
+        public ActionResult Save(Customer customer)
         {
-            this.context.Customers.Add(customer);
-            this.context.SaveChanges();
+            if (customer.Id == 0)
+            {
+                this.context.Customers.Add(customer);
+            }
+            else
+            {
+                var customerInDb = this.context
+                    .Customers
+                    .Include(x => x.MembershipType)
+                    .Single(x => x.Id == customer.Id);
 
-            return this.RedirectToAction(nameof(this.Index)); 
+                // TryUpdateModel() is not very good way for updating model! Its not secure!
+                // this.TryUpdateModel(customerInDb); 
+
+                customerInDb.Name = customer.Name;
+                customerInDb.BirthDate = customer.BirthDate;
+                customerInDb.MembershipTypeId = customer.MembershipTypeId;
+                customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+            }
+
+            this.context.SaveChanges();
+            return this.RedirectToAction(nameof(this.Index));
         }
 
         public ActionResult Details(int id)
@@ -85,6 +103,27 @@ namespace Vidly.Controllers
             };
 
             return this.View(viewModel);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var customer = this.context
+               .Customers
+               .Include(x => x.MembershipType)
+               .FirstOrDefault(x => x.Id == id);
+
+            if (customer == null)
+            {
+                return this.HttpNotFound();
+            }
+
+            var viewModel = new CustomerFormViewModel
+            {
+                Customer = customer,
+                MembershipTypes = this.context.MembershipTypes.ToList()
+            };
+
+            return this.View("CustomerForm", viewModel);
         }
     }
 }
