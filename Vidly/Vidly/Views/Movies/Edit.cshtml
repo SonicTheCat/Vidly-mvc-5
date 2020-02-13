@@ -1,10 +1,11 @@
-﻿@model  Vidly.ViewModels.CreateMovieViewModel
+﻿@model Vidly.ViewModels.EditMovieViewModel
+
 @{
-    this.ViewBag.Title = "Create New Movie";
+    this.ViewBag.Title = "Edit Movie - " + this.Model.Movie.Name;
 }
 
-<h1>Create New Movie</h1>
-@using (Html.BeginForm("Create", "Movies"))
+<h1>@this.ViewBag.Title</h1>
+@using (Html.BeginForm("Edit", "Movies"))
 {
     <div class="form-group">
         @Html.LabelFor(x => x.Movie.Name)
@@ -16,11 +17,12 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(x => x.Movie.Genre)
-        @Html.DropDownListFor(x => x.Movie.GenreId, new SelectList(this.Model.Genres, "Id", "Name"), "Select Genre", new { @class = "form-control" })
+        @Html.DropDownListFor(x => x.Movie.GenreId, new SelectList(this.Model.Genres, "Id", "Name"), null, new { @class = "form-control" })
     </div>
     <div class="form-group">
         @Html.LabelFor(x => x.Movie.NumberInStock)
         @Html.TextBoxFor(x => x.Movie.NumberInStock, new { @class = "form-control" })
     </div>
-    <button type="submit" class="btn btn-primary">Create</button>
+    @Html.HiddenFor(x => x.Movie.Id);
+    <button type="submit" class="btn btn-primary">Edit</button>
 }
