@@ -56,8 +56,20 @@ namespace Vidly.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Movie movie)
         {
+            if (!this.ModelState.IsValid)
+            {
+                var viewModel = new CreateMovieViewModel
+                {
+                    Movie = movie,
+                    Genres = this.context.Genres.ToList()
+                };
+
+                return this.View(viewModel);
+            }
+
             movie.DateAdded = DateTime.Now;
             this.context.Movies.Add(movie);
             this.context.SaveChanges();
@@ -87,8 +99,20 @@ namespace Vidly.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Movie movie)
         {
+            if (!this.ModelState.IsValid)
+            {
+                var viewModel = new EditMovieViewModel
+                {
+                    Movie = movie,
+                    Genres = this.context.Genres.ToList()
+                };
+
+                return this.View(viewModel);
+            }
+
             var movieFromDb = this.context
                 .Movies
                 .Single(x => x.Id == movie.Id);
