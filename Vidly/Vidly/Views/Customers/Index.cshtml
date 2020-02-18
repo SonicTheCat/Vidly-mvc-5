@@ -12,17 +12,49 @@
 }
 else
 {
-    <table class="table table-bordered">
-        <tr>
-            <th>Customers</th>
-            <th>Membership Type</th>
-        </tr>
+    <table id="customers-tbl" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Customers</th>
+                <th>Membership Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
         @foreach (var item in this.Model)
         {
-            <tr>
-                <td>@Html.ActionLink(item.Name, "Edit", new { id = item.Id })</td>
-                <td>@item.MembershipType.Name</td>
-            </tr>
+            <tbody>
+                <tr>
+                    <td>@Html.ActionLink(item.Name, "Edit", new { id = item.Id })</td>
+                    <td>@item.MembershipType.Name</td>
+                    <td><button data-customer-id="@item.Id" class="btn btn-link js-delete">Delete</button></td>
+                </tr>
+            </tbody>
         }
     </table>
+}
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#customers-tbl").DataTable(); 
+            
+            $("#customers-tbl").on("click", ".js-delete", function () {
+                var button = $(this);
+                var customerId = button.attr("data-customer-id");
+
+                bootbox.confirm("Are you sure?", function (resultIsOk) {
+                    if (resultIsOk) {
+                        $.ajax({
+                            url: "/api/customers/" + customerId,
+                            type: "DELETE",
+                            success: function () {
+                                button.parents("tr").remove();
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 }
