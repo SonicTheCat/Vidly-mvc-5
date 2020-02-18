@@ -62,35 +62,39 @@ namespace Vidly.Controllers.Api
 
         //PUT /api/movies/1
         [HttpPut]
-        public void UpdateMovie(int id, MovieDto dto)
+        public IHttpActionResult UpdateMovie(int id, MovieDto dto)
         {
             if (!this.ModelState.IsValid)
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return this.BadRequest();
             }
 
             var movieInDb = this.context.Movies.SingleOrDefault(x => x.Id == id);
             if (movieInDb == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return this.NotFound();
             }
 
             Mapper.Map(dto, movieInDb);
             this.context.SaveChanges();
+
+            return this.Ok();
         }
 
         //DELETE /api/movies/1
         [HttpDelete]
-        public void DeleteMovie(int id)
+        public IHttpActionResult DeleteMovie(int id)
         {
             var movieInDb = this.context.Movies.SingleOrDefault(x => x.Id == id);
             if (movieInDb == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return this.NotFound();
             }
 
             this.context.Movies.Remove(movieInDb);
             this.context.SaveChanges();
+
+            return this.Ok();
         }
     }
 }
