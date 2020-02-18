@@ -20,42 +20,44 @@ namespace Vidly.Controllers.Api
         }
 
         // GET /api/customers
-        public IEnumerable<CustomerDto> GetCustomers()
+        public IHttpActionResult GetCustomers()
         {
-            return this.context
+            var customersDto = this.context
                 .Customers
                 .ToList()
-                .Select(Mapper.Map<Customer, CustomerDto>); 
+                .Select(Mapper.Map<Customer, CustomerDto>);
+
+            return this.Ok(customersDto); 
         }
 
         // GET /api/customers/1
-        public CustomerDto GetCustomer(int id)
+        public IHttpActionResult GetCustomer(int id)
         {
             var customer = this.context.Customers.SingleOrDefault(x => x.Id == id);
             if (customer == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return this.NotFound(); 
             }
 
             var dto = Mapper.Map<Customer, CustomerDto>(customer);
-            return dto; 
+            return this.Ok(dto);
         }
 
         //POST /api/customers
         [HttpPost] // or we can remove the HttpPost attribute if our method is called 'PostCustomer'
-        public CustomerDto CreateCustomer(CustomerDto dto)
+        public IHttpActionResult CreateCustomer(CustomerDto dto)
         {
             if (!this.ModelState.IsValid)
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return this.BadRequest(); 
             }
 
             var customer = Mapper.Map<CustomerDto, Customer>(dto); 
             this.context.Customers.Add(customer);
             this.context.SaveChanges();
 
-            dto.Id = customer.Id; 
-            return dto;
+            dto.Id = customer.Id;
+            return this.Created(new Uri(Request.RequestUri + "/" + customer.Id), dto); 
         }
 
         //PUT /api/customers/1
