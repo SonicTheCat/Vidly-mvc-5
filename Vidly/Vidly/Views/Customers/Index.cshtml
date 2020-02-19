@@ -20,16 +20,17 @@ else
                 <th>Actions</th>
             </tr>
         </thead>
-        @foreach (var item in this.Model)
-        {
-            <tbody>
+        <tbody>
+            @foreach (var item in this.Model)
+            {
+
                 <tr>
                     <td>@Html.ActionLink(item.Name, "Edit", new { id = item.Id })</td>
                     <td>@item.MembershipType.Name</td>
                     <td><button data-customer-id="@item.Id" class="btn btn-link js-delete">Delete</button></td>
                 </tr>
-            </tbody>
-        }
+            }
+        </tbody>
     </table>
 }
 
@@ -37,8 +38,8 @@ else
 {
     <script>
         $(document).ready(function () {
-            $("#customers-tbl").DataTable(); 
-            
+            $("#customers-tbl").DataTable();
+
             $("#customers-tbl").on("click", ".js-delete", function () {
                 var button = $(this);
                 var customerId = button.attr("data-customer-id");
