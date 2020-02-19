@@ -9,6 +9,7 @@ using System.Data.Entity;
 
 namespace Vidly.Controllers
 {
+    [Authorize()]
     public class MoviesController : Controller
     {
 
