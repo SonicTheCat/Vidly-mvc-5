@@ -9,7 +9,7 @@ namespace Vidly.Dtos
 {
     public class CustomerDto
     {
-         public int Id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Please enter customer's name")]
         [MaxLength(255)]
@@ -20,5 +20,7 @@ namespace Vidly.Dtos
         public DateTime? BirthDate { get; set; }
 
         public int MembershipTypeId { get; set; }
+
+        public MembershipTypeDto MembershipType { get; set; }
     }
 }
