@@ -9,6 +9,7 @@ using System.Data.Entity;
 
 namespace Vidly.Controllers
 {
+    [Authorize(Roles = "CanManageMovies")]
     public class CustomersController : Controller
     {
         private ApplicationDbContext context;
