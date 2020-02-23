@@ -6,10 +6,10 @@ using System.Web.Mvc;
 using Vidly.Models;
 using Vidly.ViewModels;
 using System.Data.Entity;
+using Vidly.Constants;
 
 namespace Vidly.Controllers
 {
-    [Authorize()]
     public class MoviesController : Controller
     {
 
@@ -36,16 +36,7 @@ namespace Vidly.Controllers
             return View(movies);
         }
 
-        public ActionResult Details(int id)
-        {
-            var movie = this.context
-                .Movies
-                .Include(x => x.Genre)
-                .SingleOrDefault(x => x.Id == id);
-
-            return this.View(movie);
-        }
-
+        [Authorize(Roles = WebConstants.CanManageCustomersRole)]
         public ActionResult Create()
         {
             var viewModel = new CreateMovieViewModel
@@ -58,6 +49,7 @@ namespace Vidly.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = WebConstants.CanManageCustomersRole)]
         public ActionResult Create(Movie movie)
         {
             if (!this.ModelState.IsValid)
@@ -80,6 +72,11 @@ namespace Vidly.Controllers
 
         public ActionResult Edit(int id)
         {
+            if (!this.User.IsInRole(WebConstants.CanManageMoviesRole))
+            {
+                return this.RedirectToAction(nameof(this.Details), new { id = id });
+            }
+
             var movie = this.context
                .Movies
                .Include(x => x.Genre)
@@ -103,6 +100,11 @@ namespace Vidly.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Movie movie)
         {
+            if (!this.User.IsInRole(WebConstants.CanManageMoviesRole))
+            {
+                return this.RedirectToAction(nameof(this.Details));
+            }
+
             if (!this.ModelState.IsValid)
             {
                 var viewModel = new EditMovieViewModel
@@ -125,6 +127,16 @@ namespace Vidly.Controllers
 
             this.context.SaveChanges();
             return this.RedirectToAction(nameof(this.Index));
+        }
+
+        public ActionResult Details(int id)
+        {
+            var movie = this.context
+                .Movies
+                .Include(x => x.Genre)
+                .SingleOrDefault(x => x.Id == id);
+
+            return this.View(movie);
         }
     }
 }

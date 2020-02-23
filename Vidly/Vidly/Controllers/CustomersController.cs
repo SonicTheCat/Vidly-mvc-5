@@ -6,10 +6,12 @@ using System.Web.Mvc;
 using Vidly.Models;
 using Vidly.ViewModels;
 using System.Data.Entity;
+using Vidly.Filters;
+using Vidly.Constants;
 
 namespace Vidly.Controllers
 {
-    [Authorize(Roles = "CanManageMovies")]
+    [Authorize(Roles = WebConstants.CanManageCustomersRole)]
     public class CustomersController : Controller
     {
         private ApplicationDbContext context;
@@ -24,6 +26,7 @@ namespace Vidly.Controllers
             this.context.Dispose();
         }
 
+        [LogActionFilter]
         public ActionResult Index()
         {
             var customers = this.context
@@ -46,6 +49,7 @@ namespace Vidly.Controllers
             return this.View(models);
         }
 
+        [LogActionFilter]
         public ActionResult Create()
         {
             var membershipTypes = this.context.MembershipTypes.ToList();
@@ -60,6 +64,7 @@ namespace Vidly.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [LogActionFilter]
         public ActionResult Save(Customer customer)
         {
             if (!this.ModelState.IsValid)
@@ -119,6 +124,7 @@ namespace Vidly.Controllers
             return this.View(viewModel);
         }
 
+        [LogActionFilter]
         public ActionResult Edit(int id)
         {
             var customer = this.context

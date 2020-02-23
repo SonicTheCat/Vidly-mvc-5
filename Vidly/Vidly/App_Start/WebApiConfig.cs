@@ -11,6 +11,9 @@ namespace Vidly
     {
         public static void Register(HttpConfiguration config)
         {
+            // To apply Authorize for all api controllers:
+           // config.Filters.Add(new AuthorizeAttribute());
+
             var settings = config.Formatters.JsonFormatter.SerializerSettings; 
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             settings.Formatting = Formatting.Indented; 

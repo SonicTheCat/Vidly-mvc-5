@@ -1,11 +1,17 @@
-﻿@model IEnumerable<Vidly.Models.Movie>
+﻿@using Vidly.Constants
+
+@model IEnumerable<Vidly.Models.Movie>
 
 @{
     this.ViewBag.Title = "All Movies";
 }
 
 <h1>Movies</h1>
-@Html.ActionLink("New Movie", "Create", "Movies", null, new { @class = "btn btn-primary" })
+@if (this.Context.User.IsInRole(WebConstants.CanManageMoviesRole))
+{
+    @Html.ActionLink("New Movie", "Create", "Movies", null, new { @class = "btn btn-primary" })
+}
+
 @if (this.Model.Count() == 0)
 {
     <p>There are no movies yet!</p>
@@ -23,7 +29,14 @@ else
             <tr>
                 <td>@Html.ActionLink(item.Name, "Edit", new { id = item.Id })</td>
                 <td>@item.Genre.Name</td>
-                <td data-movie-id="@item.Id" class="btn btn-link js-delete">Delete</td>
+                @if (this.Context.User.IsInRole(WebConstants.CanManageMoviesRole))
+                {
+                    <td data-movie-id="@item.Id" class="btn btn-link js-delete">Delete</td>
+                }
+                else
+                {
+                    <td class="btn btn-link">Add to Basket</td>
+                }
             </tr>
         }
     </table>
@@ -35,14 +48,14 @@ else
         $(document).ready(function () {
             console.log("in")
             $("#movies-tbl").on("click", ".js-delete", function () {
-                var deleteButton = this; 
+                var deleteButton = this;
                 var movieId = $(deleteButton).attr("data-movie-id");
 
                 $.ajax({
-                    url: "/api/movies/" + movieId, 
-                    type: "DELETE", 
+                    url: "/api/movies/" + movieId,
+                    type: "DELETE",
                     success: function () {
-                        $(deleteButton).parents("tr").remove(); 
+                        $(deleteButton).parents("tr").remove();
                     }
                 })
             })

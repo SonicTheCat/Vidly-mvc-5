@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Vidly.Filters;
 using Vidly.Models;
 
 namespace Vidly.Controllers
@@ -56,6 +57,7 @@ namespace Vidly.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
+        [RedirectIfLoggedInFilter]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -67,6 +69,7 @@ namespace Vidly.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [RedirectIfLoggedInFilter]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
@@ -138,6 +141,7 @@ namespace Vidly.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
+        [RedirectIfLoggedInFilter]
         public ActionResult Register()
         {
             return View();
@@ -148,6 +152,7 @@ namespace Vidly.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [RedirectIfLoggedInFilter]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
