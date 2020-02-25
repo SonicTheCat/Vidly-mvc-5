@@ -8,13 +8,74 @@
 <form>
     <div class="form-group">
         <label>Customer</label>
-        <input type="text" value="" class="form-control" />
+        <div class="tt-container">
+            <input id="customerInput" type="text" value="" class="form-control" />
+        </div>
     </div>
 
     <div class="form-group">
         <label>Movie</label>
-        <input type="text" value="" class="form-control" />
+        <div class="tt-container">
+            <input id="movieInput" type="text" value="" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <ul id="movies" class="list-group"></ul>
+        </div>
     </div>
 
     <button class="btn btn-primary">Submit</button>
 </form>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var viewModel = {
+                movieIds: []
+            };
+
+            var customers = bloodhoundCustom('name', '/api/customers');
+            var movies = bloodhoundCustom('name', '/api/movies');
+
+            $('#customerInput').typeahead({
+                minLength: 3,
+                highlight: true
+            },
+                {
+                    name: 'customers',
+                    display: 'name',
+                    source: customers
+                }).on("typeahead:select", function (e, customer) {
+                    viewModel.customerId = customer.id;
+                });
+
+            $('#movieInput').typeahead({
+                minLength: 3,
+                highlight: true
+            },
+                {
+                    name: 'movies',
+                    display: 'name',
+                    source: movies
+                }).on("typeahead:select", function (e, movie) {
+                    $('#movies').append("<li class='list-group-item'>" + movie.name + "</li>");
+                    $("#movieInput").typeahead("val", "");
+                    viewModel.movieIds.push(movie.id);
+                });
+
+            function bloodhoundCustom(column, url) {
+                return new Bloodhound({
+                    datumTokenizer: Bloodhound.tokenizers.obj.whitespace(column),
+                    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                    remote: {
+                        url: url + '?query=%QUERY',
+                        wildcard: '%QUERY'
+                    }
+                });
+            }
+        })
+    </script>
+}
