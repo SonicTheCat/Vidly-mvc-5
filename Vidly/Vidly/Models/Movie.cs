@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -22,6 +23,9 @@ namespace Vidly.Models
         [Display(Name = "Number in Stock")]
         [Range(1, 1000, ErrorMessage = "Number in stock must be in range from 1 to 1000")]
         public int NumberInStock { get; set; }
+
+        [Column("Number Available")]
+        public int NumberAvailable { get; set; }
 
         public int GenreId { get; set; }
 

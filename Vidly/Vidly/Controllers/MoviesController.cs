@@ -64,6 +64,7 @@ namespace Vidly.Controllers
             }
 
             movie.DateAdded = DateTime.Now;
+            movie.NumberAvailable = movie.NumberInStock; 
             this.context.Movies.Add(movie);
             this.context.SaveChanges();
 
