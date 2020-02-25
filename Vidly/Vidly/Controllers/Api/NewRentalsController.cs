@@ -20,20 +20,41 @@ namespace Vidly.Controllers.Api
         [HttpPost]
         public IHttpActionResult CreateNewRentals(NewRentalDto newRental)
         {
+            // We dont need to do all these validation for our current app. 
+            // If we create a public API, which will be used from 
+            // many other apps - we must cover all the edge cases and 
+            // provide meaningful messages.
+            // For now we can leave only the last validation,
+            // where we check if the chosen movie is available.
+            //if (newRental.MovieIds.Count == 0)
+            //{
+            //    return this.BadRequest("No MovieIds have been provided.");
+            //}
+
             var customerInDb = this.context
                 .Customers
-                .FirstOrDefault(x => x.Id == newRental.CustomerId);
+                .SingleOrDefault(x => x.Id == newRental.CustomerId);
+
+            //if (customerInDb == null)
+            //{
+            //    return this.BadRequest("CustomerId is not valid."); 
+            //}
 
             var movies = this.context
                 .Movies
                 .Where(x => newRental.MovieIds.Contains(x.Id))
                 .ToList();
 
+            //if (movies.Count != newRental.MovieIds.Count)
+            //{
+            //    return this.BadRequest("One or more MovieIds are invalid."); 
+            //}
+
             foreach (var movie in movies)
             {
                 if (movie.NumberAvailable == 0)
                 {
-                    return BadRequest("Movie is not available."); 
+                    return this.BadRequest("Movie is not available."); 
                 }
 
                 var rental = new Rental()
