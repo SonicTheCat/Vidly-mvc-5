@@ -20,7 +20,7 @@ namespace Vidly.Controllers.Api
         [HttpPost]
         public IHttpActionResult CreateNewRentals(NewRentalDto newRental)
         {
-            // We dont need to do all these validation for our current app. 
+            // We don't need to do all these validation for our current app. 
             // If we create a public API, which will be used from 
             // many other apps - we must cover all the edge cases and 
             // provide meaningful messages.
